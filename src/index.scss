@@ -1,3 +1,18 @@
+$dark-theme-background: #23272F;
+$dark-theme-text: white;
+
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Ubuntu;
+}
+
+#root {
+  height: 100%;
+}
+body {
+  height: 100vh;
+  background-color: $dark-theme-background;
+  color: $dark-theme-text;
 }

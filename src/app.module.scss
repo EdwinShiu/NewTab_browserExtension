@@ -1,0 +1,18 @@
+.container {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 1rem;
+
+  .quote_container{
+
+  }
+
+  .clock_container {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+  }
+}
