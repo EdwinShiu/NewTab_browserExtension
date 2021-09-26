@@ -1,0 +1,15 @@
+@import 'src/colors.scss';
+
+.button_container {
+  margin: 0 6px;
+
+  .button_icon {
+    font-size: 32px !important;
+    color: $dark-theme-background-icon;
+    transition: color 0.1s ease-in !important;
+
+    &:hover {
+      color: $dark-theme-background-icon-hover;
+    }
+  }
+}

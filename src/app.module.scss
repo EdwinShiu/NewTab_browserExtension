@@ -1,18 +1,32 @@
-.container {
-  display: flex;
+@import 'src/colors.scss';
+
+.base {
   position: relative;
-  justify-content: center;
-  align-items: center;
   height: 100%;
-  padding: 1rem;
+  width: 100%;
 
-  .quote_container{
+  .container {
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 1rem;
 
-  }
+    .quote_container{
 
-  .clock_container {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
+    }
+
+    .top_right_container {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      display: flex;
+
+      .clock_container {
+
+      }
+    }
+
   }
 }

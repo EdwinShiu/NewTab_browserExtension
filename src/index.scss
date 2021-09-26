@@ -1,5 +1,4 @@
-$dark-theme-background: #23272F;
-$dark-theme-text: white;
+@import 'src/colors.scss';
 
 * {
   box-sizing: border-box;
@@ -15,4 +14,10 @@ body {
   height: 100vh;
   background-color: $dark-theme-background;
   color: $dark-theme-text;
+}
+button {
+  outline: none;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
 }
