@@ -1,0 +1,19 @@
+@import 'src/colors.scss';
+
+.container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 5rem;
+  width: 5rem;
+
+  & .weather_button {
+    height: 100%;
+    width: 100%;
+
+    & > img {
+      height: 100%;
+      width: 100%;
+    }
+  }
+}

@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import { Router } from 'express';
 import API from '../helper/api.js';
+import { getTemp, getMinMaxTemp, getRelativeHumidity, getWindSpeed } from '../helper/weather.js';
 const Weather = Router();
 Weather.get('/', (req, res) => {
     res.json('Hello, weather');
@@ -29,12 +30,27 @@ Weather.get('/', (req, res) => {
 // });
 Weather.get('/regionalTemps', (_, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const response = yield API.getCSV('https://data.weather.gov.hk/weatherAPI/hko_data/regional-weather/latest_1min_temperature.csv');
-        const regionalTemps = response;
+        let regionalWeatherInfo = {};
+        const currentWeatherReport = yield API.get('https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=rhrread');
+        regionalWeatherInfo = yield getTemp(regionalWeatherInfo);
+        regionalWeatherInfo = yield getMinMaxTemp(regionalWeatherInfo);
+        regionalWeatherInfo = yield getRelativeHumidity(regionalWeatherInfo);
+        regionalWeatherInfo = yield getWindSpeed(regionalWeatherInfo);
+        console.log(regionalWeatherInfo);
+        const results = Object.entries(regionalWeatherInfo).map(([key, value]) => {
+            return {
+                location: key,
+                weatherInfo: value,
+            };
+        });
         res.status(200).json({
             success: true,
             data: {
-                'regionalTemps': regionalTemps,
+                iconIndexes: currentWeatherReport.icon,
+                tempUnit: '\u2103',
+                rhUnit: '%',
+                windSpeedUnit: 'km/h',
+                regionalWeatherInfo: results,
             },
         });
     }

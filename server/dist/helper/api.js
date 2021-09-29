@@ -11,11 +11,11 @@ import fetch from 'node-fetch';
 import csv from 'csvtojson';
 import { Readable } from 'stream';
 const API = {
-    get: (url) => __awaiter(void 0, void 0, void 0, function* () {
-        return yield fetch(url, {
+    get: (url) => {
+        return fetch(url, {
             method: 'GET',
-        }).then((res) => __awaiter(void 0, void 0, void 0, function* () { return yield res.json(); }));
-    }),
+        }).then((res) => res.json());
+    },
     getCSV: (url) => __awaiter(void 0, void 0, void 0, function* () {
         const response = yield fetch(url);
         const row = [];

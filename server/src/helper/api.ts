@@ -4,10 +4,10 @@ import { Readable } from 'stream';
 
 
 const API = {
-  get: async (url: string) => {
-    return await fetch(url, {
+  get: (url: string) => {
+    return fetch(url, {
       method: 'GET',
-    }).then(async (res) => await res.json());
+    }).then((res) => res.json());
   },
   getCSV: async (url: string) => {
     const response: Response = await fetch(url);
