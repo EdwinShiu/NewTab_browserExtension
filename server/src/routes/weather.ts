@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import API from '../helper/api.js';
-import { getTemp, getMinMaxTemp, getRelativeHumidity, getWindSpeed } from '../helper/weather.js';
+import { getRainfall, getTemp, getMinMaxTemp, getRelativeHumidity, getWindSpeed } from '../helper/weather.js';
 import { Response } from 'node-fetch';
 import redisClient from '../helper/redis.js';
 import { WeatherForecast } from  '../class/weather'
@@ -35,18 +35,21 @@ Weather.get('/regionalTemps', async (_, res) => {
     let regionalWeatherInfo: any = {};
     const currentWeatherReport: any = await API.get('https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=rhrread');
 
+    // TODO: Use long, lat for location
+    // TODO: Rainfall is in district
+
+    regionalWeatherInfo = getRainfall(regionalWeatherInfo, currentWeatherReport['rainfall']['data']);
     regionalWeatherInfo = await getTemp(regionalWeatherInfo);
     regionalWeatherInfo = await getMinMaxTemp(regionalWeatherInfo);
     regionalWeatherInfo = await getRelativeHumidity(regionalWeatherInfo);
     regionalWeatherInfo = await getWindSpeed(regionalWeatherInfo);
     console.log(regionalWeatherInfo);
 
-    const results: any[] = Object.entries(regionalWeatherInfo).map(([key, value]) => {
-      return {
+    const results: any[] = Object.entries(regionalWeatherInfo).map(([key, value]) => ({
         location: key,
         weatherInfo: value,
-      }
-    });
+      })
+    ).filter((element: any) => element.weatherInfo['temp'] !== undefined);
 
     res.status(200).json({
       success: true,
@@ -55,7 +58,9 @@ Weather.get('/regionalTemps', async (_, res) => {
         tempUnit: '\u2103',
         rhUnit: '%',
         windSpeedUnit: 'km/h',
+        rainfallUnit: 'mm',
         regionalWeatherInfo: results,
+        updateDateTime: Date.now(),
       },
     });
   } catch (e: any) {

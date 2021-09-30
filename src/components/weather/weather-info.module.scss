@@ -5,5 +5,65 @@
   top: 1rem;
   left: 5rem;
   width: 250px;
-  height: 150px;
+  height: 180px;
+
+
+  .footer_container {
+    position: absolute;
+    top: 135px;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 240px;
+    height: 20px;
+
+    & > span {
+      font-size: 11px;
+    }
+
+    .forecast_button {
+      background-color: $dark-theme-text;
+      color: $dark-theme-background;
+      transition: all 0.2s ease-in;
+      padding: 1px 14px;
+      font-size: 11px;
+      border-radius: 5px;
+
+      &:hover {
+        background-color: $dark-theme-text-alt;
+      }
+    }
+  }
+  .button_icon {
+    font-size: 20px;
+    color: $dark-theme-background-icon;
+    transition: all 0.1s ease-in;
+  }
+  .more_button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20px;
+    height: 20px;
+
+    &:hover {
+      .button_icon {
+        color: $dark-theme-background-icon-hover;
+      }
+    }
+  }
+  .reload_button {
+    position: absolute;
+    top: 24px;
+    right: 0;
+    width: 20px;
+    height: 20px;
+
+    &:hover {
+      .button_icon {
+        color: $dark-theme-background-icon-hover;
+      }
+    }
+  }
 }

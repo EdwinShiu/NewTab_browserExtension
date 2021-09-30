@@ -16,8 +16,18 @@ export type WeatherForecast = {
   rainProb: string;
 }
 
+export type WeatherInfo = {
+  temp: string,
+  minTemp: string,
+  maxTemp: string,
+  rh: string,
+  windDir: string,
+  windSpeed: string,
+  gustSpeed: string,
+  rainfall: string, 
+}
+
 export type RegionalWeather = {
   location: string,
-  temperature: string,
-  dateTime: Date,
+  weatherInfo: WeatherInfo,
 }

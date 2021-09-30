@@ -8,6 +8,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import API from './api.js';
+export const getRainfall = (regionalWeatherInfo, data) => {
+    data.forEach((element) => {
+        if (!regionalWeatherInfo[element['place']]) {
+            regionalWeatherInfo[element['place']] = {};
+        }
+        regionalWeatherInfo[element['place']]['rainfall'] = element['max'];
+    });
+    return regionalWeatherInfo;
+};
 export const getTemp = (regionalWeatherInfo) => __awaiter(void 0, void 0, void 0, function* () {
     const regionalTemps = yield API.getCSV('https://data.weather.gov.hk/weatherAPI/hko_data/regional-weather/latest_1min_temperature.csv');
     regionalTemps.forEach((regionalTemp) => {

@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import { Router } from 'express';
 import API from '../helper/api.js';
-import { getTemp, getMinMaxTemp, getRelativeHumidity, getWindSpeed } from '../helper/weather.js';
+import { getRainfall, getTemp, getMinMaxTemp, getRelativeHumidity, getWindSpeed } from '../helper/weather.js';
 const Weather = Router();
 Weather.get('/', (req, res) => {
     res.json('Hello, weather');
@@ -32,17 +32,18 @@ Weather.get('/regionalTemps', (_, res) => __awaiter(void 0, void 0, void 0, func
     try {
         let regionalWeatherInfo = {};
         const currentWeatherReport = yield API.get('https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=rhrread');
+        // TODO: Use long, lat for location
+        // TODO: Rainfall is in district
+        regionalWeatherInfo = getRainfall(regionalWeatherInfo, currentWeatherReport['rainfall']['data']);
         regionalWeatherInfo = yield getTemp(regionalWeatherInfo);
         regionalWeatherInfo = yield getMinMaxTemp(regionalWeatherInfo);
         regionalWeatherInfo = yield getRelativeHumidity(regionalWeatherInfo);
         regionalWeatherInfo = yield getWindSpeed(regionalWeatherInfo);
         console.log(regionalWeatherInfo);
-        const results = Object.entries(regionalWeatherInfo).map(([key, value]) => {
-            return {
-                location: key,
-                weatherInfo: value,
-            };
-        });
+        const results = Object.entries(regionalWeatherInfo).map(([key, value]) => ({
+            location: key,
+            weatherInfo: value,
+        })).filter((element) => element.weatherInfo['temp'] !== undefined);
         res.status(200).json({
             success: true,
             data: {
@@ -50,7 +51,9 @@ Weather.get('/regionalTemps', (_, res) => __awaiter(void 0, void 0, void 0, func
                 tempUnit: '\u2103',
                 rhUnit: '%',
                 windSpeedUnit: 'km/h',
+                rainfallUnit: 'mm',
                 regionalWeatherInfo: results,
+                updateDateTime: Date.now(),
             },
         });
     }

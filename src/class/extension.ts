@@ -5,6 +5,10 @@ declare global {
   interface String {
     ConvertToDateFromYMDHM(): Date | null;
   }
+
+  interface Date {
+    toYMDHM(): string;
+  }
 }
 
 String.prototype.ConvertToDateFromYMDHM = function (): Date | null {
@@ -20,5 +24,10 @@ String.prototype.ConvertToDateFromYMDHM = function (): Date | null {
   }
   return new Date(numbers[0], numbers[1] - 1, numbers[2], numbers[3], numbers[4]);
 }
+
+Date.prototype.toYMDHM = function (): string {
+  return `${this.getFullYear()}/${this.getMonth() + 1}/${this.getDay()} ${this.getHours()}:${this.getMinutes()}`
+}
+
 
 export {};

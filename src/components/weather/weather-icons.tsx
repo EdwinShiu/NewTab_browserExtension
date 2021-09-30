@@ -7,7 +7,7 @@ const WeatherIcons = ({iconIndexes}: {iconIndexes: number[]}) => {
 
   const weatherIconOnClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-
+    setIconIndex((iconIndex + 1) % iconIndexes.length);
   }
 
 

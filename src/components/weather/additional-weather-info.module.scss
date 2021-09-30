@@ -1,0 +1,40 @@
+@import 'src/colors.scss';
+
+.container {
+  position: absolute;
+  top: 80px;
+  left: 0;
+  display: flex;
+  width: 100%;
+  height: 50px;
+
+  .containers_wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 0;
+    height: 50px;
+    width: 60px;
+    font-size: 14px;
+
+    .icon {
+      color: $dark-theme-text;
+    }
+  }
+
+  .additional_info_container {
+    display: flex;
+    height: 50px;
+    width: 182px;
+
+    .divider {
+      margin: 10px 0;
+      height: 30px;
+      width: 1px;
+      background-color: $dark-theme-divider;
+    }
+  }
+
+
+}

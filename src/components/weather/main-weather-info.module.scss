@@ -1,0 +1,45 @@
+@import 'src/colors.scss';
+
+$blue-color: #2862B8;
+$red-color: #e7483d;
+
+.container {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  top: 0;
+  left: 80px;
+  width: 150px;
+  height: 80px;
+  padding: 0 8px;
+
+  .location {
+    letter-spacing: 0.5px;
+    color: $dark-theme-text;
+    overflow: hidden;
+  }
+  .temp {
+    display: flex;
+    letter-spacing: 1px;
+    font-size: 32px;
+    width: 134px;
+  }
+  .minmax_container {
+    margin-left: -6px;
+    display: flex;
+
+    .temp_container {
+      display: flex;
+      padding-right: 4px;
+
+      .min_icon {
+        color: $blue-color;
+      }
+      .max_icon {
+        color: $red-color;
+      }
+    }
+  }
+
+
+}

@@ -1,5 +1,19 @@
 import API from './api.js';
 
+
+
+export const getRainfall = (regionalWeatherInfo: any, data: any[]) => {
+  data.forEach((element) => {
+    if (!regionalWeatherInfo[element['place']]) {
+      regionalWeatherInfo[element['place']] = {};
+    }
+    regionalWeatherInfo[element['place']]['rainfall'] = element['max'];
+  })
+
+  return regionalWeatherInfo;
+}
+
+
 export const getTemp = async (regionalWeatherInfo: any) => {
   const regionalTemps: any[] = await API.getCSV('https://data.weather.gov.hk/weatherAPI/hko_data/regional-weather/latest_1min_temperature.csv');
 
