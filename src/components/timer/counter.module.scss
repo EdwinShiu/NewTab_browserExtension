@@ -27,5 +27,14 @@
   .button_container {
     color: $light-theme-text;
     width: 40%;
+    display: flex;
+
+    & > button {
+      margin-right: 6px;
+
+      .button {
+        color: $dark-theme-background-icon;
+      }
+    }
   }
 }

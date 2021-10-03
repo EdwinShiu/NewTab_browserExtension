@@ -6,10 +6,12 @@ import { setInterval } from 'timers';
 
 type CounterType = {
   second: number,
-  setSecond: Function
+  setSecond: Function,
+  numberToMinuteSecond: Function,
 }
 
-const Counter = ({second, setSecond}: CounterType) => {
+// TODO: Make counter works when unmount
+const Counter = ({second, setSecond, numberToMinuteSecond}: CounterType) => {
   const prevSecond = usePrevious(second);
   const [isInputting, setIsInputting] = useState<boolean>(false);
   const [countingSecond, setCountingSecond] = useState<number>(second);
@@ -36,14 +38,12 @@ const Counter = ({second, setSecond}: CounterType) => {
     timerRef.current = timer;
   }, [timer])
 
-
-  const numberToMinuteSecond = (second: number) => {
-    const min: number = Math.floor(second / 60);
-    const sec: number = second % 60;
-    const minString: string = min < 10 ? `0${min}`: `${min}`
-    const secString: string = sec < 10 ? `0${sec}`: `${sec}`
-    return `${minString}:${secString}`;
-  }
+  useEffect(() => {
+    return () => {
+      console.log('unmount');
+      clearInterval(timerRef.current ?? undefined);
+    }
+  }, [])
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
@@ -133,12 +133,12 @@ const Counter = ({second, setSecond}: CounterType) => {
         <button
           onClick={() => handlePlayPause()}
         >
-          {isCounting ? <Pause /> : <PlayArrow />}
+          {isCounting ? <Pause className={styles.button} /> : <PlayArrow className={styles.button} />}
         </button>
         <button
           onClick={() => handleReplay()}
         >
-          <Replay />
+          <Replay className={styles.button} />
         </button>
       </div>
     </div>
