@@ -44,7 +44,7 @@ const get = (request: APIServiceRequest) => fetch((request.host ?? API_DOMAIN_DE
     Accpet: 'application/json',
     'Content-Type': 'application/json',
   },
-}).then(res => res.json());
+}).then(res => res.json()).catch(e => ({'success': false, 'error': e}));
 
 const post = (request: APIServiceRequest) => fetch((request.host ?? API_DOMAIN_DEV) + request.method + request.query, {
   method: 'POST',
@@ -53,7 +53,7 @@ const post = (request: APIServiceRequest) => fetch((request.host ?? API_DOMAIN_D
     'Content-Type': 'application/json',
   },
   body: JSON.stringify(request.body),
-}).then(res => res.json());
+}).then(res => res.json()).catch(e => ({'success': false, 'error': e}));
 
 const put = (request: APIServiceRequest) => fetch((request.host ?? API_DOMAIN_DEV) + request.method + request.query, {
   method: 'PUT',
@@ -62,7 +62,7 @@ const put = (request: APIServiceRequest) => fetch((request.host ?? API_DOMAIN_DE
     'Content-Type': 'application/json',
   },
   body: JSON.stringify(request.body),
-}).then(res => res.json());
+}).then(res => res.json()).catch(e => ({'success': false, 'error': e}));
 
 const del = (request: APIServiceRequest) => fetch((request.host ?? API_DOMAIN_DEV) + request.method + request.query, {
   method: 'DELETE',
@@ -70,7 +70,7 @@ const del = (request: APIServiceRequest) => fetch((request.host ?? API_DOMAIN_DE
     Accpet: 'application/json',
     'Content-Type': 'application/json',
   },
-}).then(res => res.json());
+}).then(res => res.json()).catch(e => ({'success': false, 'error': e}));
 
 
 export default API;

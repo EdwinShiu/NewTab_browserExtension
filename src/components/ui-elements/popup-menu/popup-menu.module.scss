@@ -1,0 +1,14 @@
+@import 'src/colors.scss';
+
+.container {
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  top: 0;
+  right: 0;
+  padding: 4px;
+  background-color: $light-theme-background;
+  border-radius: 10px;
+  box-shadow: 0 0 10px -3px #FFFFFF;
+
+}
