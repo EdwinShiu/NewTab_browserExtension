@@ -1,13 +1,17 @@
 import ReactDOM from 'react-dom';
+import { PopupMenuType } from '../../../types/types/components/ui-elements/popup-menu';
 import styles from './popup-menu.module.scss';
 
-type PopupMenuType = {
-  parentTop: number | undefined,
-  parentLeft: number | undefined,
-  open: boolean,
-  children: any,
-}
-
+/**
+ * This function creates a custom pop-up modal.
+ * 
+ * 
+ * @param parentTop is the top position of the modal
+ * @param parentLeft is the left position of the modal
+ * @param open is the open flag
+ * @param children is the child components 
+ * @returns a positioned modal component
+ */
 const PopupMenu = ({parentTop, parentLeft, open, children}: PopupMenuType) => {
 
   const HEIGHT: number = 240;

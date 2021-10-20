@@ -1,15 +1,14 @@
 import { KeyboardArrowDown, KeyboardArrowUp } from '@material-ui/icons';
+import { MainWeatherInfoType } from '../../types/types/components/weather/weather';
 import DegreeCelsius from '../general/degree-celsius';
 import styles from './main-weather-info.module.scss';
 
-type MainWeatherInfoType = {
-  location: string,
-  temp: string | undefined,
-  minTemp: string | undefined,
-  maxTemp: string | undefined,
-  tempUnit: string | undefined,
-}
-
+/**
+ * This function creates a component showing the main weather info.
+ * 
+ * @param param0 is an object of all main weather info
+ * @returns a component showing the main weather info
+ */
 const MainWeatherInfo = ({location, temp, minTemp, maxTemp, tempUnit}: MainWeatherInfoType) => {
 
   const tempString: string = temp ?? '--';

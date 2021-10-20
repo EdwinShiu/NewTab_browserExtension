@@ -3,7 +3,10 @@
 
 .container {
   height: 160px;
-  overflow-y: auto;
+
+  .add_timer_container {
+    
+  }
 
   .list_container {
     display: flex;

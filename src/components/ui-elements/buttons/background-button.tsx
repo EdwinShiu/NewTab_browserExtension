@@ -1,13 +1,13 @@
+import { BackgroundIconButtonProps } from '../../../types/types/components/ui-elements/buttons';
 import styles from './background-button.module.scss';
 
-type BackgroundIconButtonProps = {
-  size?: number,
-  children?: any
-  className?: string,
-  onClick?: any,
-  type?: 'button' | 'submit' | 'reset' | undefined,
-}
 
+/**
+ * This function is a boilerplate of the icon button
+ * 
+ * @param props is the properties of the component
+ * @returns a icon button component
+ */
 export default function BackgroundIconButton(props: BackgroundIconButtonProps) {
   return (
     <button

@@ -1,15 +1,17 @@
+import { TimerListType } from '../../types/types/components/timer/counter';
+import { numberToMinuteSecond } from '../../utils/numberToMinuteSecond';
 import CustomScrollbars from '../ui-elements/scrollbar/scrollbar';
 import styles from './timer-list.module.scss';
 
-type TimerListType = {
-  setSecond: Function,
-  timers: number[],
-  addTimer: Function,
-  numberToMinuteSecond: Function,
-}
 
-const TimerList = ({setSecond, timers, addTimer, numberToMinuteSecond}: TimerListType) => {
+const TimerList = ({setSecond, timers, addTimer}: TimerListType) => {
 
+  /**
+   * This maps the list of second to timer components
+   * 
+   * @param timers is a list of time in second
+   * @returns a list of timer components
+   */
   const getTimerChildren = (timers: number[]) => {
     return timers.map((timer, index) => (
       <button 
@@ -22,13 +24,16 @@ const TimerList = ({setSecond, timers, addTimer, numberToMinuteSecond}: TimerLis
       </button>
     ));
   }
-
+  
+// TODO: Add timer button
   return (
     <div className={styles.container}>
       <CustomScrollbars autoHide autoHideTimeout={500} autoHideDuration={200}>
-      <div className={styles.list_container}>
-        {getTimerChildren(timers)} 
-      </div>
+        <div className={styles.add_timer_container}>  
+        </div>
+        <div className={styles.list_container}>
+          {getTimerChildren(timers)} 
+        </div>
       </CustomScrollbars>
     </div>
   );

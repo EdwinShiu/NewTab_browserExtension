@@ -1,17 +1,20 @@
-import styles from './counter.module.scss';
-import React, { useState, useEffect, useRef } from 'react';
-import { usePrevious } from '../../utils/use-previous';
-import { Pause, PlayArrow, Replay } from '@material-ui/icons';
-import { setInterval } from 'timers';
-
-type CounterType = {
-  second: number,
-  setSecond: Function,
-  numberToMinuteSecond: Function,
-}
+import styles from "./counter.module.scss";
+import React, { useState, useEffect, useRef } from "react";
+import { usePrevious } from "../../utils/use-previous";
+import { Pause, PlayArrow, Replay } from "@material-ui/icons";
+import { setInterval } from "timers";
+import { CounterType } from "../../types/types/components/timer/counter";
+import { numberToMinuteSecond } from "../../utils/numberToMinuteSecond";
 
 // TODO: Make counter works when unmount
-const Counter = ({second, setSecond, numberToMinuteSecond}: CounterType) => {
+/**
+ * This is a counter that can be played/paused/resumed/reset.
+ *
+ * @param second is the remaining second of the timer
+ * @param setSecond set the time of the timer
+ * @returns a Counter component
+ */
+const Counter = ({ second, setSecond }: CounterType) => {
   const prevSecond = usePrevious(second);
   const [isInputting, setIsInputting] = useState<boolean>(false);
   const [countingSecond, setCountingSecond] = useState<number>(second);
@@ -22,57 +25,73 @@ const Counter = ({second, setSecond, numberToMinuteSecond}: CounterType) => {
   const isCountingRef = useRef<boolean>(isCounting);
   const timerRef = useRef<number | null>(timer);
 
+  // Set counting second when props change
   useEffect(() => {
     if (prevSecond !== second) {
       setCountingSecond(second);
+      // Change the ref when the state change
       countingSecondRef.current = second;
     }
   }, [second]);
 
+  // Change the ref when the state change
   useEffect(() => {
     isCountingRef.current = isCounting;
-  }, [isCounting])
+  }, [isCounting]);
 
+  // Change the ref when the state change
   useEffect(() => {
-    console.log('timer', timer)
+    console.log("timer", timer);
     timerRef.current = timer;
-  }, [timer])
+  }, [timer]);
 
+  // Clear timer when unmount
   useEffect(() => {
     return () => {
-      console.log('unmount');
       clearInterval(timerRef.current ?? undefined);
-    }
-  }, [])
+    };
+  }, []);
 
+  /**
+   * This function set the timer when "Enter" is pressed.
+   * 
+   * @param e is keyboard input
+   */
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       setIsInputting(false);
       if (e.currentTarget.value) {
         setSecond(Math.min(parseInt(e.currentTarget.value), 999) * 60);
       }
     }
-  } 
+  };
 
+  /**
+   * This function stops the event propagation.
+   * 
+   * @param e is mouse event
+   */
   const handleParentPropagation = (e: React.MouseEvent) => {
     e.stopPropagation();
-  }
+  };
 
   const handleBackgroundClick = () => {
     if (isInputting) {
       setIsInputting(false);
     }
-  }
+  };
 
+  /**
+   * This function handles the start/stop/resume of the timer
+   */
   const handlePlayPause = () => {
     setIsCounting(!isCounting);
     if (!timerRef.current) {
-      clearInterval(timerRef.current ?? undefined);
+      // Create new countdown timer if there is no timer
       const newTimer = window.setInterval(() => {
-        console.log('running', isCountingRef.current);
-        console.log('end', timerRef.current);
+        // Check if it is counting
         if (isCountingRef.current) {
-          console.log('counting', countingSecondRef.current)
+          // Stop Timer if timer goes to zero
           if (countingSecondRef.current <= 0) {
             //TODO: sound?
             if (timerRef.current) {
@@ -82,25 +101,35 @@ const Counter = ({second, setSecond, numberToMinuteSecond}: CounterType) => {
             }
             return;
           }
+          // Count down
           setCountingSecond(--countingSecondRef.current);
         }
       }, 1000);
       setTimer(newTimer);
     }
-  }
+  };
 
-  const handleReplay = () => {
-    console.log(timerRef.current);
+  /**
+   * This function handles the reset of the timer
+   */
+  const handleReset = () => {
+    // Clear the timer if a timer exists
     if (timerRef.current) {
-      console.log('clearInterval')
       clearInterval(timerRef.current);
       setTimer(null);
     }
+    // Reset timer
     setCountingSecond(second);
     countingSecondRef.current = second;
     setIsCounting(false);
-  }
+  };
 
+  /**
+   * This function switches the display.
+   * 
+   * @param isInputting is a inputting flag
+   * @returns an input/time-display component
+   */
   const getTimerOrInput = (isInputting: boolean) => {
     return isInputting ? (
       <div className={styles.main_display} onClick={handleParentPropagation}>
@@ -111,7 +140,7 @@ const Counter = ({second, setSecond, numberToMinuteSecond}: CounterType) => {
           onKeyPress={handleKeyPress}
           className={styles.input}
           onFocus={(e) => {
-            e.currentTarget.select()
+            e.currentTarget.select();
           }}
           autoFocus
         />
@@ -121,28 +150,21 @@ const Counter = ({second, setSecond, numberToMinuteSecond}: CounterType) => {
         {numberToMinuteSecond(countingSecond)}
       </div>
     );
-  }
+  };
 
   return (
-    <div
-      className={styles.container}
-      onClick={handleBackgroundClick}
-    >
+    <div className={styles.container} onClick={handleBackgroundClick}>
       {getTimerOrInput(isInputting)}
       <div className={styles.button_container}>
-        <button
-          onClick={() => handlePlayPause()}
-        >
+        <button onClick={() => handlePlayPause()}>
           {isCounting ? <Pause className={styles.button} /> : <PlayArrow className={styles.button} />}
         </button>
-        <button
-          onClick={() => handleReplay()}
-        >
+        <button onClick={() => handleReset()}>
           <Replay className={styles.button} />
         </button>
       </div>
     </div>
   );
-}
+};
 
 export default Counter;

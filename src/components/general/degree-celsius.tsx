@@ -1,32 +1,33 @@
+import { DegreeCelsiusType } from "../../types/types/components/general/degree-celsius";
 
-type DegreeCelsiusType = {
-  fontSize: number,
-}
-
-
-const DegreeCelsius = ({fontSize}: DegreeCelsiusType) => {
-  console.log(fontSize);
+/**
+ * This shows the degree celsius character with font family
+ *
+ * @param fontSize is the font size of the character
+ * @returns a degree celsius character
+ */
+const DegreeCelsius = ({ fontSize }: DegreeCelsiusType) => {
   return (
-    <div 
+    <div
       style={{
-        position: 'relative',
+        position: "relative",
         fontSize: `${fontSize}px`,
-        marginLeft: '6px'
+        marginLeft: "6px",
       }}
     >
       <div
         style={{
-          position: 'absolute',
+          position: "absolute",
           top: 0,
           left: 0,
-          fontSize: `${fontSize * 0.35}px`
+          fontSize: `${fontSize * 0.35}px`,
         }}
       >
         o
       </div>
       C
     </div>
-  )
-}
+  );
+};
 
 export default DegreeCelsius;

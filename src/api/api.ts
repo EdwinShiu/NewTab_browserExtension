@@ -1,18 +1,8 @@
-
-type APIServiceRequest = {
-  host?: string,
-  method: string,
-  body: any,
-  query: string,
-}
-
-export type APIServiceResponse = {
-  success: boolean,
-  data: any,
-}
+import { APIServiceRequest } from "../types/types/api";
 
 const API_DOMAIN_DEV = process.env.REACT_APP_API_DOMAIN;
 
+// Big chunk of endpoints
 const API = {
   weather: {
     getNineDayWeather: (params: any = {}) => {
@@ -38,6 +28,7 @@ const API = {
 
 console.log(API_DOMAIN_DEV)
 
+// Generic GET
 const get = (request: APIServiceRequest) => fetch((request.host ?? API_DOMAIN_DEV) + request.method + request.query, {
   method: 'GET',
   headers: {
@@ -46,6 +37,7 @@ const get = (request: APIServiceRequest) => fetch((request.host ?? API_DOMAIN_DE
   },
 }).then(res => res.json()).catch(e => ({'success': false, 'error': e}));
 
+// Generic POST
 const post = (request: APIServiceRequest) => fetch((request.host ?? API_DOMAIN_DEV) + request.method + request.query, {
   method: 'POST',
   headers: {
@@ -55,6 +47,7 @@ const post = (request: APIServiceRequest) => fetch((request.host ?? API_DOMAIN_D
   body: JSON.stringify(request.body),
 }).then(res => res.json()).catch(e => ({'success': false, 'error': e}));
 
+// Generic PUT
 const put = (request: APIServiceRequest) => fetch((request.host ?? API_DOMAIN_DEV) + request.method + request.query, {
   method: 'PUT',
   headers: {
@@ -64,6 +57,7 @@ const put = (request: APIServiceRequest) => fetch((request.host ?? API_DOMAIN_DE
   body: JSON.stringify(request.body),
 }).then(res => res.json()).catch(e => ({'success': false, 'error': e}));
 
+// Generic DEL
 const del = (request: APIServiceRequest) => fetch((request.host ?? API_DOMAIN_DEV) + request.method + request.query, {
   method: 'DELETE',
   headers: {

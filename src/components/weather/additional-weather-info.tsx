@@ -2,22 +2,17 @@ import styles from './additional-weather-info.module.scss';
 import { ReactComponent as Air } from '../../assets/icons/svg/air.svg';
 import { ReactComponent as WaterDrop } from '../../assets/icons/svg/waterdrop.svg';
 import { ReactComponent as Umbrella } from '../../assets/icons/svg/umbrella.svg';
+import { AdditionWeatherInfoType } from '../../types/types/components/weather/weather';
 
 
-type AdditionWeatherInfoType = {
-  rh: string,
-  windDir: string,
-  windSpeed: string,
-  gustSpeed: string,
-  rainfall: string,
-  rhUnit: string,
-  windSpeedUnit: string,
-  rainfallUnit: string,
-}
-
-
+// TODO: wind direction and wind speed
+/**
+ * This function creates a additional weather info component.
+ * 
+ * @param param0 is an object of all additional weather info
+ * @returns a row of additional weather info
+ */
 const AdditionWeatherInfo = ({rh, windDir, windSpeed, gustSpeed, rainfall, rhUnit, windSpeedUnit, rainfallUnit}: AdditionWeatherInfoType) => {
-
 
   return (
     <div className={styles.container}>

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { RegionalWeather } from '../../class/weather';
 import { FetchingBlock } from '../../components/general/loading-placeholder';
-import API, { APIServiceResponse } from '../../api/api';
+import API from '../../api/api';
+import { APIServiceResponse } from '../../types/types/api';
 import styles from './weather-info.module.scss';
-import '../../class/extension';
+import '../../utils/extension';
 import { GeneralError } from '../general/error-block';
 import WeatherIcons from './weather-icons';
 import Dropdown from '../ui-elements/dropdown/dropdown';
@@ -11,14 +11,13 @@ import MainWeatherInfo from './main-weather-info';
 import { Autorenew, MoreVert } from '@material-ui/icons';
 import BackgroundIconButton from '../ui-elements/buttons/background-button';
 import AdditionWeatherInfo from './additional-weather-info';
+import { RegionalWeather, Units } from '../../types/types/components/weather/weather';
 
-type Units = {
-  tempUnit: string,
-  rhUnit: string,
-  windSpeedUnit: string,
-  rainfallUnit: string,
-}
-
+/**
+ * This function creates a weather information component.
+ * 
+ * @returns a comprehensive weather information component
+ */
 const Weather = () => {
   const NOW: Date = new Date(Date.now());
   const [regionalWeather, setRegionalWeather] = useState<RegionalWeather[]>([]);
@@ -28,8 +27,7 @@ const Weather = () => {
   const [isfetching, setIsFetching] = useState<boolean>(true);
   const [currentLocationIndex, setCurrentLocationIndex] = useState<number>(0);
 
-
-
+  // Fetch the regional weather on mount
   useEffect(() => {
     fetchRegionalWeather();
   }, []);
@@ -50,6 +48,7 @@ const Weather = () => {
     setIsFetching(false);
   }
 
+  // TODO: Add dropdown for location
   const onDropdownChange = (index: number) => {
     setCurrentLocationIndex(index);
   }
@@ -64,11 +63,13 @@ const Weather = () => {
     console.log('more');
   }
 
+  // Fetch the weather info again
   const onReloadClick = () => {
     setIsFetching(true);
     fetchRegionalWeather();
   }
 
+  // When loading
   if (isfetching) {
     return (
       <div className={styles.container}>
@@ -77,6 +78,7 @@ const Weather = () => {
     );
   }
 
+  // When there is no regional weather
   if (regionalWeather.length == 0) {
     return (
       <div className={styles.container}>

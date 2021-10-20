@@ -6,14 +6,21 @@ import Counter from './counter';
 import TimerList from './timer-list';
 import styles from './timer.module.scss';
 
+/**
+ * This is the Timer component, containing all the timers.
+ * 
+ * @returns a timer pop-up component
+ */
 const Timer = () =>{
 
   const buttonRef = useRef<HTMLDivElement>(null);
+  // Position of the modal
   const [top, setTop] = useState<number>(0);
   const [left, setLeft] = useState<number>(0);
   const [second, setSecond] = useState<number>(0);
   const [open, setOpen] = useState<boolean>(false);
-  const [timers, setTimers] = useState<number[]>([600, 120, 480, 240, 720, 900]);
+  // List of timers
+  const [timers, setTimers] = useState<number[]>([600, 120, 480, 240, 720, 900]); // Dummy data
 
   const setButtonPosition = () => {
     const rect: DOMRect | undefined = buttonRef.current?.getBoundingClientRect();
@@ -23,22 +30,17 @@ const Timer = () =>{
     }
   }
 
+  // This function is called when the timer button is pressed
   const handleClick = (open: boolean) => {
     setOpen(!open);
   }
 
+  // This function is called when a new timer is added to the list
   const handleAddTimer = (timer: number) => {
     setTimers([timer, ...timers]);
   }
 
-  const numberToMinuteSecond = (second: number) => {
-    const min: number = Math.floor(second / 60);
-    const sec: number = second % 60;
-    const minString: string = min < 10 ? `0${min}`: `${min}`
-    const secString: string = sec < 10 ? `0${sec}`: `${sec}`
-    return `${minString}:${secString}`;
-  }
-
+  // This adds a listener to window resize event
   useLayoutEffect(() => {
     window.addEventListener('resize', setButtonPosition);
     setButtonPosition();
@@ -60,13 +62,11 @@ const Timer = () =>{
         <Counter
           second={second}
           setSecond={setSecond}
-          numberToMinuteSecond={numberToMinuteSecond}
         />
         <TimerList 
           setSecond={setSecond}
           timers={timers}
           addTimer={handleAddTimer}
-          numberToMinuteSecond={numberToMinuteSecond}
         />
       </PopupMenu>
       <BackgroundIconButton
