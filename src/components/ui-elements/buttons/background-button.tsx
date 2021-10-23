@@ -16,7 +16,9 @@ export default function BackgroundIconButton(props: BackgroundIconButtonProps) {
       type={props.type ?? 'button'}
       style={props.size ? {
         height: props.size,
+        minHeight: props.size,
         width: props.size,
+        minWidth: props.size,
       } : {}}
     >
       {props.children}

@@ -5,6 +5,11 @@ import { Menu } from "@material-ui/icons";
 import { BACKGROUND_ICON_BUTTON_SIZE } from "../../types/constants/component_constants";
 import BookmarkFolder from "./bookmark-folder";
 import { Bookmark } from "../../types/types/components/navbar/navbar";
+import API from "../../api/api";
+import { APIServiceResponse } from "../../types/types/api";
+import NavbarExtended from "./navbar-extended";
+import { getAllBookmarkFolderOnly, getBookmarkFolderOnly, getBookmarkOnly } from "../../utils/bookmarkNode";
+import CustomScrollbars from '../ui-elements/scrollbar/scrollbar';
 
 // dummy data
 const TEST = {
@@ -17,7 +22,79 @@ const TEST = {
       children: [
         {
           id: "5",
-          title: "Test5",
+          title: "Test5 12312 12312 123123123 12312",
+        },
+        {
+          id: "6",
+          title: "Test6",
+        },
+        {
+          id: "5",
+          title: "Test5 12312 12312 123123123 12312",
+        },
+        {
+          id: "6",
+          title: "Test6",
+        },
+        {
+          id: "5",
+          title: "Test5 12312 12312 123123123 12312",
+        },
+        {
+          id: "6",
+          title: "Test6",
+        },
+        {
+          id: "5",
+          title: "Test5 12312 12312 123123123 12312",
+        },
+        {
+          id: "6",
+          title: "Test6",
+        },
+        {
+          id: "5",
+          title: "Test5 12312 12312 123123123 12312",
+        },
+        {
+          id: "6",
+          title: "Test6",
+        },
+        {
+          id: "5",
+          title: "Test5 12312 12312 123123123 12312",
+        },
+        {
+          id: "6",
+          title: "Test6",
+        },
+        {
+          id: "5",
+          title: "Test5 12312 12312 123123123 12312",
+        },
+        {
+          id: "6",
+          title: "Test6",
+        },
+        {
+          id: "5",
+          title: "Test5 12312 12312 123123123 12312",
+        },
+        {
+          id: "6",
+          title: "Test6",
+        },
+        {
+          id: "5",
+          title: "Test5 12312 12312 123123123 12312",
+        },
+        {
+          id: "6",
+          title: "Test6",
+        },
+        {
+          id: "5",
+          title: "Test5 12312 12312 123123123 12312",
         },
         {
           id: "6",
@@ -30,6 +107,12 @@ const TEST = {
             {
               id: "12",
               title: "Test12",
+              children: [
+                {
+                  id: "15",
+                  title: "Test15",
+                },
+              ]
             },
             {
               id: "13",
@@ -96,36 +179,6 @@ const VerticalNavBar = () => {
   const toggleNavMenu = () => {
     setIsNavMenuOpen(!isNavMenuOpen);
     setIsNavMenuButtonOpen(!isNavMenuButtonOpen);
-  };
-
-  /**
-   * This function gets the children of the node.
-   * 
-   * @param bookmarkTreeNode is the node in the bookmark tree
-   * @returns an array of Bookmark which is the child of the node
-   */
-  const getBookmarkChildren = (bookmarkTreeNode: Bookmark): Bookmark[] => {
-    return bookmarkTreeNode.children ?? [];
-  }
-
-  /**
-   * This function only gets the folder of the folder.
-   * 
-   * @param bookmarkTreeFolder is the folder in the bookmark tree
-   * @returns an array of Bookmark Folder only
-   */
-   const getBookmarkFolderOnly = (bookmarkTreeFolder: Bookmark): Bookmark[] =>  {
-    return getBookmarkChildren(bookmarkTreeFolder).filter(child => child.children !== undefined);
-  }
-
-  /**
-   * This function only gets the bookmark of the folder.
-   * 
-   * @param bookmarkTreeFolder is the folder in the bookmark tree
-   * @returns an array of Bookmark only
-   */
-  const getBookmarkOnly = (bookmarkTreeFolder: Bookmark): Bookmark[] =>  {
-    return getBookmarkChildren(bookmarkTreeFolder).filter(child => child.children === undefined);
   }
 
   /**
@@ -147,8 +200,6 @@ const VerticalNavBar = () => {
     ));
   }
 
-  //const getBookmark
-
   return (
     <div className={`${styles.container} ${isNavMenuOpen ? styles.open : ""}`}>
       <div className={styles.navbar_main_container_outer}>
@@ -164,6 +215,15 @@ const VerticalNavBar = () => {
             {renderBookmarkFolders(TEST)}
           </div>
         </div>
+      </div>
+      <div
+        className={styles.navbar_extended_container}
+      >
+        <CustomScrollbars autoHide autoHideTimeout={500} autoHideDuration={200}>
+          <NavbarExtended 
+            bookmarkFolders={getAllBookmarkFolderOnly(TEST)}
+          />
+        </CustomScrollbars>
       </div>
     </div>
   );

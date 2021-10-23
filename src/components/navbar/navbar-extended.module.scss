@@ -1,0 +1,64 @@
+@import 'src/colors.scss';
+
+
+.container {
+  margin: 0.5rem 0;
+  width: 16rem;
+
+  .folder_container {
+    display: flex;
+    align-items: center;
+    margin: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    background-color: $dark-theme-background-light;
+    color: $dark-theme-text-alt;
+    overflow: hidden;
+    border-radius: 0.5rem;
+
+
+    & > span {
+      margin-left: 0.5rem;
+    }
+  }
+  .bookmarks_container {
+    margin: 0 0.5rem;
+    display: grid;
+    gap: 0.75rem;
+    grid-template-columns: 4.5rem 4.5rem 4.5rem;
+
+    .bookmark_container {
+      position: relative;
+      width: 4.5rem;
+      height: 4.5rem;
+      border-radius: 0.5rem;
+      background-color: $dark-theme-background-light;
+
+      .bookmark_title {
+        position: absolute;
+        bottom: 0.125rem;
+        padding: 0.125rem;
+        width: 4.5rem;
+        height: 1rem;
+        overflow: hidden;
+        font-size: 12px;
+        text-align: center;
+      }
+      .bookmark_favicon {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -70%);
+        width: 1.5rem;
+        height: 1.5rem;
+        border-radius: 0.75rem;
+        background-color: $dark-theme-background;
+        transition: background-color 0.3s ease-in-out;
+      }
+      &:hover {
+        .bookmark_favicon {
+          background-color: $dark-theme-text-alt;
+        }
+      }
+    }
+  }
+}
